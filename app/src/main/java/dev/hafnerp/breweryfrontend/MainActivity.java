@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Beer> beerList;
 
+    private BeerDAO beerDAO = BeerDAO.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        beerList = getBeers();
+        beerList = beerDAO.getBeers();
     }
 
     @Override
@@ -50,16 +52,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Beer getBeerFromEditTexts() throws Exception {
+        //Getting the references...
         EditText editText_name = findViewById(R.id.edit_text_name);
         EditText editText_alcohol = findViewById(R.id.edit_text_alcohol);
         EditText editText_calories = findViewById(R.id.edit_text_calories);
         EditText editText_category = findViewById(R.id.edit_text_category);
+
+        //Values parsed...
+        int id = beerList.size();
+        String name = editText_name.getText().toString();
+        double alcohol = Double.parseDouble(editText_alcohol.getText().toString());
+        double calories = Double.parseDouble(editText_calories.getText().toString());
+        Category category = Category.fromString(editText_category.getText().toString());
+
+        //Business constraints...
+        if (alcohol > 100) throw new IllegalStateException("Alcohol " + alcohol + " to high!");
+
+        //Creating the beer...
         Beer beer = new Beer(
-                beerList.size(),
-                editText_name.getText().toString(),
-                Double.parseDouble(editText_alcohol.getText().toString()),
-                Double.parseDouble(editText_calories.getText().toString()),
-                Category.fromString(editText_category.getText().toString())
+                id,
+                name,
+                alcohol,
+                calories,
+                category
         );
 
         responseMessage.setText(R.string.created_beer_from_textboxes);
@@ -146,8 +161,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshBeersTable() {
-        //ToDo:: Getting beers from the backend!
-        setBeerSource(beerList);
+        setBeerSource(beerDAO.getBeers());
         responseMessage.setText(R.string.refreshed_beers_table);
     }
 
