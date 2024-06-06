@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">BreweryFrontend</string>
+    <string name="id">ID</string>
+    <string name="name">Name</string>
+    <string name="alcohol">Alcohol</string>
+    <string name="calories">Calories</string>
+    <string name="category">Category</string>
+    <string name="_123">123</string>
+    <string name="save">Save</string>
+    <string name="created_beer_from_textboxes">Created beer from textBoxes</string>
+    <string name="refreshed_beers_table">Refreshed beers table</string>
+    <string name="set_beers_source_to_new_beers">Set beers source to new beers</string>
+    <string name="response_from_the_app">Response from the app</string>
+    <string name="add_beer">Add Beer</string>
+</resources>
