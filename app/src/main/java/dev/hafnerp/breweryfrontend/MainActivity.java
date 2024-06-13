@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (Beer beer : beers)
         {
-            TableRow tableRow = new TableRow(getApplicationContext());
+            TableRow    tableRow = new TableRow(getApplicationContext());
             TextView    textView_id = new TextView(getApplicationContext());
                         textView_id.setText(String.valueOf(beer.getId()));
                         textView_id.setPadding(6,3,6,3);
@@ -154,6 +156,13 @@ public class MainActivity extends AppCompatActivity {
                         textView_category.setText(beer.getCategory().toString());
                         textView_category.setPadding(6,3,6,3);
                         tableRow.addView(textView_category);
+            tableRow.setOnClickListener((view) -> {
+                String text = "Clicked" + beer.toString();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(this, text, duration);
+                toast.show();
+            });
             tableLayout.addView(tableRow);
         }
 
